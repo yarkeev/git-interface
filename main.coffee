@@ -1,11 +1,18 @@
 exec = require('child_process').exec
 
-module.exports = (fileName, callback) ->
-    hash = null
-    git = exec "git log -n 1 --pretty=\"%H\" -- #{fileName}"
-    git.stdout.on 'data', (data) ->
-        hash = data.trim()
-        callback? hash
-    git.stdout.on 'close', ->
-        unless hash
-            callback? null
+gitExec = (cmd, callback) ->
+	result = null
+	git = exec cmd
+	git.stdout.on 'data', (data) ->
+		result = data.trim()
+		callback? result
+	git.stdout.on 'close', ->
+		unless result
+			callback? null
+
+module.exports = 
+	getHash: (fileName, callback) ->
+		gitExec "git log -n 1 --pretty=\"%H\" -- #{fileName}", callback
+
+	diffMaster: (fileName, callback) ->
+		gitExec "git diff master -- #{fileName}", callback

@@ -2,8 +2,15 @@ Get hash last commit of file for git repository
 
 ## Example:
 ```
-getHash = require('githash');
-getHash('index.html', function (hash) {
-	console.log(hash)
+gitInterface = require('git-interface');
+
+//get hash of last commit
+gitInterface.getHash('index.html', function (hash) {
+	console.log(hash);
+});
+
+//get diff with master
+gitInterface.getHash('index.html', function (diff) {
+	console.log(diff);
 });
 ```
