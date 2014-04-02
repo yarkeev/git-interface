@@ -1,4 +1,4 @@
-Get hash last commit of file for git repository
+Some interfaces for work with git repository
 
 ## Example:
 ```

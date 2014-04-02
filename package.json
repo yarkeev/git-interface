@@ -1,7 +1,7 @@
 {
   "name": "git-interface",
   "version": "0.0.4",
-  "description": "get hash last commit of file for git repository",
+  "description": "some interfaces for work with git repository",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
