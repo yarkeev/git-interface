@@ -3,26 +3,46 @@ var exec, gitExec;
 
 exec = require('child_process').exec;
 
-gitExec = function(cmd, callback) {
-  var git, result;
+gitExec = function(cmd, timeout, callback) {
+  var git, result, timer;
+  if (timeout == null) {
+    timeout = 2000;
+  }
+  if (typeof timeout === 'function') {
+    callback = timeout;
+    timeout = 2000;
+  }
   result = null;
-  git = exec(cmd);
-  git.stdout.on('data', function(data) {
-    result = data.trim();
-    return typeof callback === "function" ? callback(result) : void 0;
-  });
-  return git.stdout.on('close', function() {
+  timer = setTimeout(function() {
+    console.log('timeout call');
     if (!result) {
-      return typeof callback === "function" ? callback(null) : void 0;
+      return callback(null);
     }
-  });
+  }, timeout);
+  try {
+    git = exec(cmd);
+    git.stdout.on('data', function(data) {
+      result = data.trim();
+      clearTimeout(timer);
+      return typeof callback === "function" ? callback(result) : void 0;
+    });
+    return git.stdout.on('close', function() {
+      if (!result) {
+        clearTimeout(timer);
+        return typeof callback === "function" ? callback(null) : void 0;
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return callback(null);
+  }
 };
 
 module.exports = {
   getHash: function(fileName, callback) {
     return gitExec("git log -n 1 --pretty=\"%H\" -- " + fileName, callback);
   },
-  diffMaster: function(fileName, callback) {
-    return gitExec("git diff master -- " + fileName, callback);
+  diffMaster: function(fileName, timeout, callback) {
+    return gitExec("git diff master -- " + fileName, timeout, callback);
   }
 };

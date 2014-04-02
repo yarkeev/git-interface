@@ -1,6 +1,6 @@
 {
   "name": "git-interface",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "get hash last commit of file for git repository",
   "main": "main.js",
   "scripts": {
