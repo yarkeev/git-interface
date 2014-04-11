@@ -10,7 +10,7 @@ gitInterface.getHash('index.html', function (hash) {
 });
 
 //get diff with master
-gitInterface.getHash('index.html', function (diff) {
+gitInterface.diffMaster('index.html', function (diff) {
 	console.log(diff);
 });
 ```
