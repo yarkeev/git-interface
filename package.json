@@ -1,6 +1,6 @@
 {
   "name": "git-interface",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "some interfaces for work with git repository",
   "main": "main.js",
   "scripts": {

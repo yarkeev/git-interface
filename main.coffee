@@ -5,7 +5,7 @@ gitExec = (cmd, timeout = 2000, callback) ->
 		callback = timeout
 		timeout = 2000
 
-	result = null
+	result = ''
 
 	timer = setTimeout ->
 		console.log('timeout call');
@@ -16,18 +16,16 @@ gitExec = (cmd, timeout = 2000, callback) ->
 	try
 		git = exec cmd
 		git.stdout.on 'data', (data) ->
-			result = data.trim()
+			result += data.trim()
+		git.stdout.on 'close', ->
 			clearTimeout timer
 			callback? result
-		git.stdout.on 'close', ->
-			unless result
-				clearTimeout timer
-				callback? null
 	catch error
 		console.log error
-		callback null
+		clearTimeout timer
+		callback? null
 
-module.exports = 
+module.exports =
 	getHash: (fileName, callback) ->
 		gitExec "git log -n 1 --pretty=\"%H\" -- #{fileName}", callback
 

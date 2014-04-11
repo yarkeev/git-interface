@@ -12,7 +12,7 @@ gitExec = function(cmd, timeout, callback) {
     callback = timeout;
     timeout = 2000;
   }
-  result = null;
+  result = '';
   timer = setTimeout(function() {
     console.log('timeout call');
     if (!result) {
@@ -22,19 +22,16 @@ gitExec = function(cmd, timeout, callback) {
   try {
     git = exec(cmd);
     git.stdout.on('data', function(data) {
-      result = data.trim();
+      return result += data.trim();
+    });
+    return git.stdout.on('close', function() {
       clearTimeout(timer);
       return typeof callback === "function" ? callback(result) : void 0;
     });
-    return git.stdout.on('close', function() {
-      if (!result) {
-        clearTimeout(timer);
-        return typeof callback === "function" ? callback(null) : void 0;
-      }
-    });
   } catch (error) {
     console.log(error);
-    return callback(null);
+    clearTimeout(timer);
+    return typeof callback === "function" ? callback(null) : void 0;
   }
 };
 
