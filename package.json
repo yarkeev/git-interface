@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/yarkeev/githash/issues"
   },
-  "homepage": "https://github.com/yarkeev/githash"
+  "homepage": "https://github.com/yarkeev/githash",
+  "devDependencies": {
+    "underscore": "^1.6.0"
+  }
 }
