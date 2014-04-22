@@ -13,4 +13,14 @@ gitInterface.getHash('index.html', function (hash) {
 gitInterface.diffMaster('index.html', function (diff) {
 	console.log(diff);
 });
+
+//checkout
+gitInterface.checkout('master', 10000, function () {
+	console.log('Your branch is master');
+});
+
+//get current branch name
+gitInterface.getBranchName(function (branchName) {
+	console.log('Current branch: ' + branchName);
+});
 ```
