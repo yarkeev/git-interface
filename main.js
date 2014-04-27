@@ -26,7 +26,7 @@ gitExec = function(cmd, timeout, callback) {
     }
   }, timeout);
   try {
-    git = exec(cmd, {
+    git = exec("git " + cmd, {
       cwd: options.cwd
     });
     git.stdout.on('data', function(data) {
@@ -48,21 +48,43 @@ module.exports = {
     return _.extend(options, opt);
   },
   getHash: function(fileName, callback) {
-    return gitExec("git log -n 1 --pretty=\"%H\" -- " + fileName, callback);
+    return gitExec("log -n 1 --pretty=\"%H\" -- " + fileName, callback);
   },
   diffMaster: function(fileName, timeout, callback) {
-    return gitExec("git diff master -- " + fileName, timeout, callback);
+    return gitExec("diff master -- " + fileName, timeout, callback);
   },
   checkout: function(branchName, timeout, callback) {
-    return gitExec("git checkout " + branchName, timeout, callback);
+    return gitExec("checkout " + branchName, timeout, callback);
   },
   getBranchName: function(callback) {
-    return gitExec("git branch", function(result) {
+    return gitExec("branch", function(result) {
       return result.split("\n").forEach(function(item) {
         if (item.indexOf('*') === 0) {
           return typeof callback === "function" ? callback(item.replace(/\*\s/g, '')) : void 0;
         }
       });
     });
+  },
+  createBranch: function(branchName, callback) {
+    return gitExec("checkout -b " + branchName, callback);
+  },
+  add: function(callback) {
+    return gitExec("add -A", callback);
+  },
+  commit: function(message, callback) {
+    return gitExec("commit -m '" + message + "'", callback);
+  },
+  pull: function(callback) {
+    return gitExec("pull origin", callback);
+  },
+  merge: function(branchName, options, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = '';
+    }
+    return gitExec("merge " + branchName + " " + options, callback);
+  },
+  push: function(callback) {
+    return gitExec("push origin", callback);
   }
 };

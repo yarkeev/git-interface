@@ -18,7 +18,7 @@ gitExec = (cmd, timeout = 2000, callback) ->
 	, timeout
 
 	try
-		git = exec cmd,
+		git = exec "git #{cmd}",
 			cwd: options.cwd
 		git.stdout.on 'data', (data) ->
 			result += data.trim()
@@ -35,15 +35,36 @@ module.exports =
 		_.extend options, opt
 
 	getHash: (fileName, callback) ->
-		gitExec "git log -n 1 --pretty=\"%H\" -- #{fileName}", callback
+		gitExec "log -n 1 --pretty=\"%H\" -- #{fileName}", callback
 
 	diffMaster: (fileName, timeout, callback) ->
-		gitExec "git diff master -- #{fileName}", timeout, callback
+		gitExec "diff master -- #{fileName}", timeout, callback
 
 	checkout: (branchName, timeout, callback) ->
-		gitExec "git checkout #{branchName}", timeout, callback
+		gitExec "checkout #{branchName}", timeout, callback
 
 	getBranchName: (callback) ->
-		gitExec "git branch", (result) ->
+		gitExec "branch", (result) ->
 			result.split("\n").forEach (item) ->
 				callback? item.replace /\*\s/g, '' if item.indexOf('*') == 0
+
+	createBranch: (branchName, callback) ->
+		gitExec "checkout -b #{branchName}", callback
+
+	add: (callback) ->
+		gitExec "add -A", callback
+
+	commit: (message, callback) ->
+		gitExec "commit -m '#{message}'", callback
+
+	pull: (callback) ->
+		gitExec "pull origin", callback
+
+	merge: (branchName, options, callback) ->
+		if typeof(options) == 'function'
+			callback = options
+			options = ''
+		gitExec "merge #{branchName} #{options}", callback
+
+	push: (callback) ->
+		gitExec "push origin", callback
