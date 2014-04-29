@@ -4,10 +4,10 @@ _ = require 'underscore'
 options =
 	cwd: './'
 
-gitExec = (cmd, timeout = 2000, callback) ->
+gitExec = (cmd, timeout = 10000, callback) ->
 	if typeof timeout == 'function'
 		callback = timeout
-		timeout = 2000
+		timeout = 10000
 
 	result = ''
 
@@ -21,6 +21,12 @@ gitExec = (cmd, timeout = 2000, callback) ->
 		git = exec "git #{cmd}",
 			cwd: options.cwd
 		git.stdout.on 'data', (data) ->
+			result += data.trim()
+		git.stdout.on 'error', (data) ->
+			result += data.trim()
+		git.stderr.on 'data', (data) ->
+			result += data.trim()
+		git.stderr.on 'error', (data) ->
 			result += data.trim()
 		git.stdout.on 'close', ->
 			clearTimeout timer
@@ -55,7 +61,7 @@ module.exports =
 		gitExec "add -A", callback
 
 	commit: (message, callback) ->
-		gitExec "commit -m '#{message}'", callback
+		gitExec "commit -am '#{message}'", callback
 
 	pull: (callback) ->
 		gitExec "pull origin", callback
@@ -68,3 +74,14 @@ module.exports =
 
 	push: (callback) ->
 		gitExec "push origin", callback
+
+	fetch: (callback) ->
+		gitExec "fetch", callback
+
+	getConflictList: (callback) ->
+		gitExec "diff --name-only --diff-filter=U", (result) ->
+			callback? result.split("\n")
+
+	getLastChanges: (callback) ->
+		gitExec 'log -n 1 --pretty="%H"', (hash) ->
+			gitExec "difftool #{hash} --name-status", callback

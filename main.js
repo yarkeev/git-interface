@@ -12,11 +12,11 @@ options = {
 gitExec = function(cmd, timeout, callback) {
   var git, result, timer;
   if (timeout == null) {
-    timeout = 2000;
+    timeout = 10000;
   }
   if (typeof timeout === 'function') {
     callback = timeout;
-    timeout = 2000;
+    timeout = 10000;
   }
   result = '';
   timer = setTimeout(function() {
@@ -30,6 +30,15 @@ gitExec = function(cmd, timeout, callback) {
       cwd: options.cwd
     });
     git.stdout.on('data', function(data) {
+      return result += data.trim();
+    });
+    git.stdout.on('error', function(data) {
+      return result += data.trim();
+    });
+    git.stderr.on('data', function(data) {
+      return result += data.trim();
+    });
+    git.stderr.on('error', function(data) {
       return result += data.trim();
     });
     return git.stdout.on('close', function() {
@@ -72,7 +81,7 @@ module.exports = {
     return gitExec("add -A", callback);
   },
   commit: function(message, callback) {
-    return gitExec("commit -m '" + message + "'", callback);
+    return gitExec("commit -am '" + message + "'", callback);
   },
   pull: function(callback) {
     return gitExec("pull origin", callback);
@@ -86,5 +95,18 @@ module.exports = {
   },
   push: function(callback) {
     return gitExec("push origin", callback);
+  },
+  fetch: function(callback) {
+    return gitExec("fetch", callback);
+  },
+  getConflictList: function(callback) {
+    return gitExec("diff --name-only --diff-filter=U", function(result) {
+      return typeof callback === "function" ? callback(result.split("\n")) : void 0;
+    });
+  },
+  getLastChanges: function(callback) {
+    return gitExec('log -n 1 --pretty="%H"', function(hash) {
+      return gitExec("difftool " + hash + " --name-status", callback);
+    });
   }
 };
