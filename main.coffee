@@ -11,12 +11,6 @@ gitExec = (cmd, timeout = 10000, callback) ->
 
 	result = ''
 
-	timer = setTimeout ->
-		console.log('timeout call');
-		unless result
-			callback null
-	, timeout
-
 	try
 		git = exec "git #{cmd}",
 			cwd: options.cwd
@@ -29,11 +23,9 @@ gitExec = (cmd, timeout = 10000, callback) ->
 		git.stderr.on 'error', (data) ->
 			result += data.trim()
 		git.stdout.on 'close', ->
-			clearTimeout timer
 			callback? result
 	catch error
 		console.log error
-		clearTimeout timer
 		callback? null
 
 module.exports =
@@ -83,5 +75,6 @@ module.exports =
 			callback? result.split("\n")
 
 	getLastChanges: (callback) ->
-		gitExec 'log -n 1 --pretty="%H"', (hash) ->
-			gitExec "difftool #{hash} --name-status", callback
+		gitExec 'log -n 2 --pretty="%H"', (hash) ->
+			lastOtherHash = hash.split('\n')[1]
+			gitExec "difftool #{lastOtherHash} --name-status", callback

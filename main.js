@@ -10,7 +10,7 @@ options = {
 };
 
 gitExec = function(cmd, timeout, callback) {
-  var git, result, timer;
+  var git, result;
   if (timeout == null) {
     timeout = 10000;
   }
@@ -19,12 +19,6 @@ gitExec = function(cmd, timeout, callback) {
     timeout = 10000;
   }
   result = '';
-  timer = setTimeout(function() {
-    console.log('timeout call');
-    if (!result) {
-      return callback(null);
-    }
-  }, timeout);
   try {
     git = exec("git " + cmd, {
       cwd: options.cwd
@@ -42,12 +36,10 @@ gitExec = function(cmd, timeout, callback) {
       return result += data.trim();
     });
     return git.stdout.on('close', function() {
-      clearTimeout(timer);
       return typeof callback === "function" ? callback(result) : void 0;
     });
   } catch (error) {
     console.log(error);
-    clearTimeout(timer);
     return typeof callback === "function" ? callback(null) : void 0;
   }
 };
@@ -105,8 +97,10 @@ module.exports = {
     });
   },
   getLastChanges: function(callback) {
-    return gitExec('log -n 1 --pretty="%H"', function(hash) {
-      return gitExec("difftool " + hash + " --name-status", callback);
+    return gitExec('log -n 2 --pretty="%H"', function(hash) {
+      var lastOtherHash;
+      lastOtherHash = hash.split('\n')[1];
+      return gitExec("difftool " + lastOtherHash + " --name-status", callback);
     });
   }
 };
