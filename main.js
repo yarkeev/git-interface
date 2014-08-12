@@ -101,7 +101,7 @@ module.exports = {
       var lastOtherHash;
       lastOtherHash = hash.split('\n')[1];
       if (!lastOtherHash) {
-        lastOtherHash = hash.slice(hash.length / 2 - 1);
+        lastOtherHash = hash.slice(hash.length / 2);
       }
       return gitExec("difftool " + lastOtherHash + " --name-status", callback);
     });

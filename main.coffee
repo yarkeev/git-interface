@@ -78,5 +78,5 @@ module.exports =
 		gitExec 'log -n 2 --pretty="%H"', (hash) ->
 			lastOtherHash = hash.split('\n')[1]
 			unless lastOtherHash
-				lastOtherHash = hash.slice(hash.length / 2 -1)
+				lastOtherHash = hash.slice(hash.length / 2)
 			gitExec "difftool #{lastOtherHash} --name-status", callback
