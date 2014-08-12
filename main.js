@@ -100,6 +100,9 @@ module.exports = {
     return gitExec('log -n 2 --pretty="%H"', function(hash) {
       var lastOtherHash;
       lastOtherHash = hash.split('\n')[1];
+      if (!lastOtherHash) {
+        lastOtherHash = hash.slice(hash.length / 2 - 1);
+      }
       return gitExec("difftool " + lastOtherHash + " --name-status", callback);
     });
   }
