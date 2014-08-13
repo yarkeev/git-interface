@@ -66,7 +66,8 @@ module.exports =
 		gitExec "merge #{branchName} #{options}", callback
 
 	push: (callback) ->
-		gitExec "push origin", callback
+		@getBranchName (branch) ->
+			gitExec "push origin #{branch}", callback
 
 	fetch: (callback) ->
 		gitExec "fetch", callback
