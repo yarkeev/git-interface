@@ -56,7 +56,8 @@ module.exports =
 		gitExec "commit -am '#{message}'", callback
 
 	pull: (callback) ->
-		gitExec "pull origin", callback
+		@getBranchName (branch) ->
+			gitExec "pull origin #{branch}", callback
 
 	merge: (branchName, options, callback) ->
 		if typeof(options) == 'function'

@@ -76,7 +76,9 @@ module.exports = {
     return gitExec("commit -am '" + message + "'", callback);
   },
   pull: function(callback) {
-    return gitExec("pull origin", callback);
+    return this.getBranchName(function(branch) {
+      return gitExec("pull origin " + branch, callback);
+    });
   },
   merge: function(branchName, options, callback) {
     if (typeof options === 'function') {
