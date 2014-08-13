@@ -112,9 +112,9 @@ module.exports = {
     return gitExec("reset --hard HEAD", callback);
   },
   removeLocalBranch: function(branchName, callback) {
-    return gitExec("git branch -D " + branchName, callback);
+    return gitExec("branch -D " + branchName, callback);
   },
   removeRemoteBranch: function(branchName, callback) {
-    return gitExec("git push origin --delete " + branchName, callback);
+    return gitExec("push origin --delete " + branchName, callback);
   }
 };

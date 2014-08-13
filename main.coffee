@@ -86,7 +86,7 @@ module.exports =
 		gitExec "reset --hard HEAD", callback
 
 	removeLocalBranch: (branchName, callback) ->
-		gitExec "git branch -D #{branchName}", callback
+		gitExec "branch -D #{branchName}", callback
 
 	removeRemoteBranch: (branchName, callback) ->
-		gitExec "git push origin --delete #{branchName}", callback
+		gitExec "push origin --delete #{branchName}", callback
