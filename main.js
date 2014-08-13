@@ -88,7 +88,9 @@ module.exports = {
     return gitExec("merge " + branchName + " " + options, callback);
   },
   push: function(callback) {
-    return gitExec("push origin", callback);
+    return this.getBranchName(function(branch) {
+      return gitExec("push origin " + branch, callback);
+    });
   },
   fetch: function(callback) {
     return gitExec("fetch", callback);
