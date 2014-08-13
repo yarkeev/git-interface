@@ -105,5 +105,8 @@ module.exports = {
       }
       return gitExec("difftool " + lastOtherHash + " --name-status", callback);
     });
+  },
+  reset: function(callback) {
+    return gitExec("reset --hard HEAD", callback);
   }
 };

@@ -80,3 +80,6 @@ module.exports =
 			unless lastOtherHash
 				lastOtherHash = hash.slice(hash.length / 2)
 			gitExec "difftool #{lastOtherHash} --name-status", callback
+
+	reset: (callback) ->
+		gitExec "reset --hard HEAD", callback
