@@ -64,6 +64,11 @@ gitInterface.getConflictList(function (conflicts) {
 	console.log(conflicts);
 });
 
+//get list of uncommitted files
+gitInterface.getUncommittedList(function (conflicts) {
+	console.log(conflicts);
+});
+
 //get changed files in last commit
 gitInterface.getLastChanges(function (changes) {
 	console.log(changes);

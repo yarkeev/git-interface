@@ -76,6 +76,10 @@ module.exports =
 		gitExec "diff --name-only --diff-filter=U", (result) ->
 			callback? result.split("\n")
 
+	getUncommittedList: (callback) ->
+		gitExec "diff --name-only", (result) ->
+			callback? result.split("\n")
+
 	getLastChanges: (callback) ->
 		gitExec 'log -n 2 --pretty="%H"', (hash) ->
 			lastOtherHash = hash.split('\n')[1]

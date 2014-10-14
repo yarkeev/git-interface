@@ -100,6 +100,11 @@ module.exports = {
       return typeof callback === "function" ? callback(result.split("\n")) : void 0;
     });
   },
+  getUncommittedList: function(callback) {
+    return gitExec("diff --name-only", function(result) {
+      return typeof callback === "function" ? callback(result.split("\n")) : void 0;
+    });
+  },
   getLastChanges: function(callback) {
     return gitExec('log -n 2 --pretty="%H"', function(hash) {
       var lastOtherHash;
