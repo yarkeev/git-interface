@@ -4,8 +4,9 @@ _ = require 'underscore'
 options =
 	cwd: './'
 
-gitExec = (cmd, timeout = 10000, callback) ->
+gitExec = (cmd, timeout = 10000, callback, callbackIteration) ->
 	if typeof timeout == 'function'
+		callbackIteration = callback
 		callback = timeout
 		timeout = 10000
 
@@ -15,13 +16,21 @@ gitExec = (cmd, timeout = 10000, callback) ->
 		git = exec "git #{cmd}",
 			cwd: options.cwd
 		git.stdout.on 'data', (data) ->
-			result += data.trim()
+			data = data.trim()
+			result += data
+			callbackIteration? data
 		git.stdout.on 'error', (data) ->
-			result += data.trim()
+			data = data.trim()
+			result += data
+			callbackIteration? data
 		git.stderr.on 'data', (data) ->
-			result += data.trim()
+			data = data.trim()
+			result += data
+			callbackIteration? data
 		git.stderr.on 'error', (data) ->
-			result += data.trim()
+			data = data.trim()
+			result += data
+			callbackIteration? data
 		git.stdout.on 'close', ->
 			callback? result
 	catch error
@@ -65,9 +74,9 @@ module.exports =
 			options = ''
 		gitExec "merge #{branchName} #{options}", callback
 
-	push: (callback) ->
+	push: (callback, callbackIteration) ->
 		@getBranchName (branch) ->
-			gitExec "push origin #{branch}", callback
+			gitExec "push origin #{branch}", callback, callbackIteration
 
 	fetch: (callback) ->
 		gitExec "fetch", callback
