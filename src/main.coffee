@@ -68,11 +68,11 @@ module.exports =
 		@getBranchName (branch) ->
 			gitExec "pull origin #{branch}", callback
 
-	merge: (branchName, options, callback) ->
-		if typeof(options) == 'function'
-			callback = options
-			options = ''
-		gitExec "merge #{branchName} #{options}", callback
+	merge: (branchName, mergeOptions, callback) ->
+		if typeof(mergeOptions) == 'function'
+			callback = mergeOptions
+			mergeOptions = ''
+		gitExec "merge #{branchName} #{mergeOptions}", callback
 
 	push: (callback, callbackIteration) ->
 		@getBranchName (branch) ->

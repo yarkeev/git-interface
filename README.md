@@ -1,76 +1,212 @@
-Some interfaces for work with git repository
+# git-interface
 
-## Example:
+![](http://s7.postimg.org/tz15stjaj/git_interface.png)
+
+Interface to work with a git repository in node.js
+
+## Installation
+
+```bash
+$ npm install debug
 ```
-gitInterface = require('git-interface');
+
+## Usage
+
+```js
+git = require('git-interface');
 
 //get hash of last commit
-gitInterface.getHash('index.html', function (hash) {
+git.getHash('path/to/file', function (hash) {
 	console.log(hash);
 });
+...
+```
 
-//get diff with master
-gitInterface.diffMaster('index.html', function (diff) {
-	console.log(diff);
+## Documentation
+
+### .setOptions(options)
+
+Set repository options
+
+```js
+//default path is current directory
+//but you can set the path:
+git.setOptions({
+	cwd: '/path/to/repository'
 });
+```
 
-//checkout
-gitInterface.checkout('master', 10000, function () {
-	console.log('Your branch is master');
+### .commit(message, [callback])
+
+Commit changes with `message`
+
+```js
+git.commit('message for annotate', function () {
+	console.log('commit done');
 });
+```
 
-//get current branch name
-gitInterface.getBranchName(function (branchName) {
-	console.log('Current branch: ' + branchName);
+### .pull([callback])
+
+Pull current branch from origin
+
+```js
+git.pull(function () {
+	console.log('pull done');
 });
+```
 
-//create new branch
-gitInterface.createBranch('new-branch', function () {
+### .push([callback])
+
+Push current branch to origin
+
+```js
+git.push(function () {
+	console.log('push done');
+});
+```
+
+### .createBranch(branchName, [callback])
+
+Create branch with name `branchName`
+
+```js
+git.createBranch('new-branch', function () {
+	console.log('new branch created');
+});
+```
+
+### .checkout(branchName, [callback])
+
+Checkout to branch `branchName`
+
+```js
+git.checkout('master', function () {
+	console.log('now branch is master');
+});
+```
+
+### .getHash(fileName, callback)
+
+Getting hash commit was last modified
+
+```js
+git.getHash('path/to/file', function (hash) {
+	console.log(hash);
+});
+```
+
+### .diffMaster(fileName, callback)
+
+File comparison `fileName` with master
+
+```js
+git.diffMaster('path/to/file', function (diff) {
+	console.log('diff with master:', diff);
+});
+```
+
+### .getBranchName(callback)
+
+Get name of the current brunch
+
+```js
+git.getBranchName(function (branchName) {
+	console.log('current branch: ' + branchName);
+});
+```
+
+### .add([callback])
+
+Add all new files to VCS
+
+```js
+git.add(function () {
 	console.log('done');
 });
+```
 
-//add files to VCS
-gitInterface.add(function () {
-	console.log('done');
+### .merge(branchName, [mergeOptions], [callback])
+
+Merge branch `branchName` to the current branch with flags `mergeOptions`
+
+```js
+git.merge('branch-name', function () {
+	console.log('branch-name merged');
 });
-
-//commit changes
-gitInterface.commit('message for annotate', function () {
-	console.log('done');
+```
+```js
+git.merge('branch-name', '--squash', function () {
+	console.log('branch-name merged');
 });
+```
 
-//pull
-gitInterface.pull(function () {
-	console.log('done');
+### .fetch([callback])
+
+Download objects and refs from origin
+
+```js
+git.fetch(function () {
+	console.log('fetch done');
 });
+```
 
-//merge with other branch
-gitInterface.merge('branch-name', '--squash', function () {
-	console.log('done');
+### .getConflictList(callback)
+
+Get list of conflicted files after merge
+
+```js
+git.getConflictList(function (conflicts) {
+	console.log('conflicted files: ', conflicts);
 });
+```
 
-//push
-gitInterface.push(function () {
-	console.log('done');
+### .getUncommittedList(callback)
+
+Get list of uncommitted files
+
+```js
+git.getUncommittedList(function (uncommitted) {
+	console.log('uncommitted files: ', uncommitted);
 });
+```
 
-//fetch
-gitInterface.fetch(function () {
-	console.log('done');
+### .getLastChanges(callback)
+
+Getting a list of files that have changed in the last commit
+
+```js
+git.getLastChanges(function (changes) {
+	console.log('last changes: ', changes);
 });
+```
 
-//get conflict list after merge or pull
-gitInterface.getConflictList(function (conflicts) {
-	console.log(conflicts);
+### .reset([callback])
+
+Reset uncommitted changes
+
+```js
+git.reset(function () {
+	console.log('reset done');
 });
+```
 
-//get list of uncommitted files
-gitInterface.getUncommittedList(function (conflicts) {
-	console.log(conflicts);
+### .removeLocalBranch(branchName, [callback])
+
+Remove local branch `branchName`
+
+```js
+git.removeLocalBranch('branch-name', function () {
+	console.log('local branch-name removed');
 });
+```
 
-//get changed files in last commit
-gitInterface.getLastChanges(function (changes) {
-	console.log(changes);
+### .removeRemoteBranch(branchName, [callback])
+
+Remove branch `branchName` from origin
+
+```js
+git.removeRemoteBranch('branch-name', function () {
+	console.log('branch-name removed from origin');
 });
 ```
