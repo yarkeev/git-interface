@@ -1,6 +1,6 @@
 {
   "name": "git-interface",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "some interfaces for work with git repository",
   "main": "dst/main.js",
   "repository": {
@@ -10,7 +10,14 @@
   "keywords": [
     "git",
     "hash",
-    "commit"
+    "pull",
+    "push",
+    "commit",
+    "last changes",
+    "checkout",
+    "merge",
+    "conflicts",
+    "cvs"
   ],
   "author": "Yarkeev Denis <denis.yarkeev@gmail.com>",
   "license": "MIT",
