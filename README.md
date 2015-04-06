@@ -7,7 +7,7 @@ Interface to work with a git repository in node.js
 ## Installation
 
 ```bash
-$ npm install debug
+$ npm install git-interface
 ```
 
 ## Usage
