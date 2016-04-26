@@ -96,6 +96,10 @@ module.exports =
 				lastOtherHash = hash.slice(hash.length / 2)
 			gitExec "difftool #{lastOtherHash} --name-status", callback
 
+	getDiff: (revision, callback) ->
+		gitExec "diff #{revision} --name-only", (result) ->
+			callback? result.split("\n")
+
 	reset: (callback) ->
 		gitExec "reset --hard HEAD", callback
 

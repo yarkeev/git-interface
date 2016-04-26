@@ -181,6 +181,16 @@ git.getLastChanges(function (changes) {
 });
 ```
 
+### .getDiff(revision, callback)
+
+Getting a list of files that have changed relative revision
+
+```js
+git.getDiff('52986deb5d9c2e60ece526a785b125079b86980b', function (changes) {
+	console.log('changes: ', changes);
+});
+```
+
 ### .reset([callback])
 
 Reset uncommitted changes
