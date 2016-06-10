@@ -16,22 +16,22 @@ gitExec = (cmd, timeout = 10000, callback, callbackIteration) ->
 		git = exec "git #{cmd}",
 			cwd: options.cwd
 		git.stdout.on 'data', (data) ->
-			data = data || ''
+			data = data.toString() || ''
 			data = data.trim()
 			result += data
 			callbackIteration? data
 		git.stdout.on 'error', (data) ->
-			data = data || ''
+			data = data.toString() || ''
 			data = data.trim()
 			result += data
 			callbackIteration? data
 		git.stderr.on 'data', (data) ->
-			data = data || ''
+			data = data.toString() || ''
 			data = data.trim()
 			result += data
 			callbackIteration? data
 		git.stderr.on 'error', (data) ->
-			data = data || ''
+			data = data.toString() || ''
 			data = data.trim()
 			result += data
 			callbackIteration? data

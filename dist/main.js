@@ -25,25 +25,25 @@ gitExec = function(cmd, timeout, callback, callbackIteration) {
       cwd: options.cwd
     });
     git.stdout.on('data', function(data) {
-      data = data || '';
+      data = data.toString() || '';
       data = data.trim();
       result += data;
       return typeof callbackIteration === "function" ? callbackIteration(data) : void 0;
     });
     git.stdout.on('error', function(data) {
-      data = data || '';
+      data = data.toString() || '';
       data = data.trim();
       result += data;
       return typeof callbackIteration === "function" ? callbackIteration(data) : void 0;
     });
     git.stderr.on('data', function(data) {
-      data = data || '';
+      data = data.toString() || '';
       data = data.trim();
       result += data;
       return typeof callbackIteration === "function" ? callbackIteration(data) : void 0;
     });
     git.stderr.on('error', function(data) {
-      data = data || '';
+      data = data.toString() || '';
       data = data.trim();
       result += data;
       return typeof callbackIteration === "function" ? callbackIteration(data) : void 0;
