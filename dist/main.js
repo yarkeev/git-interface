@@ -62,6 +62,9 @@ module.exports = {
   setOptions: function(opt) {
     return _.extend(options, opt);
   },
+  clone: function(repo, dest, callback) {
+    return gitExec("clone " + repo + " " + dest, callback);
+  },
   getHash: function(fileName, callback) {
     return gitExec("log -n 1 --pretty=\"%H\" -- " + fileName, callback);
   },

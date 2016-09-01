@@ -45,6 +45,9 @@ module.exports =
 	setOptions: (opt) ->
 		_.extend options, opt
 
+	clone: (repo, dest, callback) ->
+		gitExec "clone #{repo} #{dest}", callback
+
 	getHash: (fileName, callback) ->
 		gitExec "log -n 1 --pretty=\"%H\" -- #{fileName}", callback
 

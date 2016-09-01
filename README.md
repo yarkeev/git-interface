@@ -36,6 +36,16 @@ git.setOptions({
 });
 ```
 
+### .clone(repo, dest, [callback])
+
+clone repository `repo` to path `dest`
+
+```js
+git.clone('git@github.com:yarkeev/git-interface.git', 'git-interface', function () {
+	console.log('clone done');
+});
+```
+
 ### .commit(message, [callback])
 
 Commit changes with `message`
