@@ -159,7 +159,7 @@ module.exports = {
     return gitExec("branch -r", function(result) {
       var branches;
       branches = result.split("\n").map(function(item) {
-        return item.trim().replace(/\s+\*\s+/);
+        return item.trim().replace(/\s+\*\s+/).replace("origin/", "");
       });
       return typeof callback === "function" ? callback(branches) : void 0;
     });

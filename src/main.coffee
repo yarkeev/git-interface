@@ -125,5 +125,8 @@ module.exports =
 	getRemoteBranchList: (callback) ->
 		gitExec "branch -r", (result) ->
 			branches = result.split("\n").map (item) ->
-				item.trim().replace(/\s+\*\s+/)
+				item.trim()
+					.replace(/\s+\*\s+/)
+					.replace("origin/", "")
+
 			callback? branches
