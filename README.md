@@ -230,3 +230,24 @@ git.removeRemoteBranch('branch-name', function () {
 	console.log('branch-name removed from origin');
 });
 ```
+
+### .getLocalBranchList([callback])
+
+Get list of local branches
+
+```js
+git.getLocalBranchList(function (branches) {
+	console.log('local branches: ', branches);
+});
+```
+
+
+### .getRemoteBranchList([callback])
+
+Get list of remote branches
+
+```js
+git.getRemoteBranchList(function (branches) {
+	console.log('remote branches: ', branches);
+});
+```

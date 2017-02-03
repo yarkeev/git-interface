@@ -145,5 +145,23 @@ module.exports = {
   },
   removeRemoteBranch: function(branchName, callback) {
     return gitExec("push origin --delete " + branchName, callback);
+  },
+  getLocalBranchList: function(callback) {
+    return gitExec("branch", function(result) {
+      var branches;
+      branches = result.split("\n").map(function(item) {
+        return item.trim().replace(/\s+\*\s+/);
+      });
+      return typeof callback === "function" ? callback(branches) : void 0;
+    });
+  },
+  getRemoteBranchList: function(callback) {
+    return gitExec("branch -r", function(result) {
+      var branches;
+      branches = result.split("\n").map(function(item) {
+        return item.trim().replace(/\s+\*\s+/);
+      });
+      return typeof callback === "function" ? callback(branches) : void 0;
+    });
   }
 };

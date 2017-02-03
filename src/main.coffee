@@ -115,3 +115,15 @@ module.exports =
 
 	removeRemoteBranch: (branchName, callback) ->
 		gitExec "push origin --delete #{branchName}", callback
+
+	getLocalBranchList: (callback) ->
+		gitExec "branch", (result) ->
+			branches = result.split("\n").map (item) ->
+				item.trim().replace(/\s+\*\s+/)
+			callback? branches
+
+	getRemoteBranchList: (callback) ->
+		gitExec "branch -r", (result) ->
+			branches = result.split("\n").map (item) ->
+				item.trim().replace(/\s+\*\s+/)
+			callback? branches
