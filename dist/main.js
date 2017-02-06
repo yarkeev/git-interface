@@ -158,10 +158,20 @@ module.exports = {
   getRemoteBranchList: function(callback) {
     return gitExec("branch -r", function(result) {
       var branches;
-      branches = result.split("\n").map(function(item) {
+      branches = result.split("\n").filter(function(item) {
+        return item.indexOf("origin/HEAD") === -1;
+      }).map(function(item) {
         return item.trim().replace(/\s+\*\s+/).replace("origin/", "");
       });
       return typeof callback === "function" ? callback(branches) : void 0;
+    });
+  },
+  getTimeOfLastCommit: function(branchName, callback) {
+    return gitExec("show --format='%ci %cr' " + branchName, function(result) {
+      var date, dateTimeStr;
+      dateTimeStr = result.split('\n')[0].split(' ');
+      date = new Date(dateTimeStr[0] + " " + dateTimeStr[1] + " " + dateTimeStr[2]);
+      return callback(date.getTime());
     });
   }
 };

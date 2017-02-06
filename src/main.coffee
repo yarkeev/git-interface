@@ -124,9 +124,18 @@ module.exports =
 
 	getRemoteBranchList: (callback) ->
 		gitExec "branch -r", (result) ->
-			branches = result.split("\n").map (item) ->
-				item.trim()
-					.replace(/\s+\*\s+/)
-					.replace("origin/", "")
-
+			branches = result.split("\n")
+				.filter (item) ->
+					item.indexOf("origin/HEAD") == -1
+				.map (item) ->
+					item.trim()
+						.replace(/\s+\*\s+/)
+						.replace("origin/", "")
 			callback? branches
+
+	getTimeOfLastCommit: (branchName, callback) ->
+		gitExec "show --format='%ci %cr' #{branchName}", (result) ->
+			dateTimeStr = result.split('\n')[0].split(' ')
+			date = new Date("#{dateTimeStr[0]} #{dateTimeStr[1]} #{dateTimeStr[2]}")
+
+			callback date.getTime()

@@ -241,7 +241,6 @@ git.getLocalBranchList(function (branches) {
 });
 ```
 
-
 ### .getRemoteBranchList([callback])
 
 Get list of remote branches
@@ -249,5 +248,15 @@ Get list of remote branches
 ```js
 git.getRemoteBranchList(function (branches) {
 	console.log('remote branches: ', branches);
+});
+```
+
+### .getTimeOfLastCommit(branchName, [callback])
+
+Get list of remote branches
+
+```js
+git.getTimeOfLastCommit('master', function (time) {
+	console.log('time of last commit in master: ', time);
 });
 ```
