@@ -3,7 +3,7 @@ var _, exec, gitExec, options;
 
 exec = require('child_process').exec;
 
-_ = require('underscore');
+_ = require('lodash');
 
 options = {
   cwd: './'
@@ -60,7 +60,7 @@ gitExec = function(cmd, timeout, callback, callbackIteration) {
 
 module.exports = {
   setOptions: function(opt) {
-    return _.extend(options, opt);
+    return _.merge(options, opt);
   },
   clone: function(repo, dest, callback) {
     return gitExec("clone " + repo + " " + dest, callback);

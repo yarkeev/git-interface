@@ -1,6 +1,6 @@
 {
   "name": "git-interface",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "some interfaces for work with git repository",
   "main": "dist/main.js",
   "repository": {
@@ -25,7 +25,8 @@
     "url": "https://github.com/yarkeev/githash/issues"
   },
   "homepage": "https://github.com/yarkeev/githash",
-  "devDependencies": {
-    "underscore": "^1.6.0"
+  "devDependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }

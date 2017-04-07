@@ -1,5 +1,5 @@
 exec = require('child_process').exec
-_ = require 'underscore'
+_ = require 'lodash'
 
 options =
 	cwd: './'
@@ -43,7 +43,7 @@ gitExec = (cmd, timeout = 10000, callback, callbackIteration) ->
 
 module.exports =
 	setOptions: (opt) ->
-		_.extend options, opt
+		_.merge options, opt
 
 	clone: (repo, dest, callback) ->
 		gitExec "clone #{repo} #{dest}", callback
