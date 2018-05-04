@@ -139,3 +139,7 @@ module.exports =
 			date = new Date("#{dateTimeStr[0]} #{dateTimeStr[1]} #{dateTimeStr[2]}")
 
 			callback date.getTime()
+
+	getHashOfLastCommit: (branchName, callback) ->
+		gitExec "log #{branchName} --pretty=\"%H\" | head -1", (result) ->
+			callback(result)

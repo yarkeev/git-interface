@@ -1,32 +1,37 @@
 {
-  "name": "git-interface",
-  "version": "0.1.9",
-  "description": "some interfaces for work with git repository",
-  "main": "dist/main.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/yarkeev/git-interface.git"
-  },
-  "keywords": [
-    "git",
-    "hash",
-    "pull",
-    "push",
-    "commit",
-    "last changes",
-    "checkout",
-    "merge",
-    "conflicts",
-    "cvs"
-  ],
-  "author": "Yarkeev Denis <denis.yarkeev@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yarkeev/githash/issues"
-  },
-  "homepage": "https://github.com/yarkeev/githash",
-  "devDependencies": {},
-  "dependencies": {
-    "lodash": "^4.17.4"
-  }
+	"name": "git-interface",
+	"version": "1.0.0",
+	"description": "some interfaces for work with git repository",
+	"main": "dist/main.js",
+	"scripts": {
+		"build": "./node_modules/.bin/coffee -bc -o dist/ src/main.coffee"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/yarkeev/git-interface.git"
+	},
+	"keywords": [
+		"git",
+		"hash",
+		"pull",
+		"push",
+		"commit",
+		"last changes",
+		"checkout",
+		"merge",
+		"conflicts",
+		"cvs"
+	],
+	"author": "Yarkeev Denis <denis.yarkeev@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/yarkeev/githash/issues"
+	},
+	"homepage": "https://github.com/yarkeev/githash",
+	"devDependencies": {
+		"coffeescript": "^2.3.0"
+	},
+	"dependencies": {
+		"lodash": "^4.17.4"
+	}
 }

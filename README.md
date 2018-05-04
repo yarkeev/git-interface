@@ -253,10 +253,20 @@ git.getRemoteBranchList(function (branches) {
 
 ### .getTimeOfLastCommit(branchName, [callback])
 
-Get list of remote branches
+Get time of last commit in branch
 
 ```js
 git.getTimeOfLastCommit('master', function (time) {
 	console.log('time of last commit in master: ', time);
+});
+```
+
+### .getHashOfLastCommit(branchName, [callback])
+
+Get hash of last commit in branch
+
+```js
+git.getHashOfLastCommit('master', function (hash) {
+	console.log('hash of last commit in master: ', hash);
 });
 ```
