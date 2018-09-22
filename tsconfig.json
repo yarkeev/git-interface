@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"declaration": true,
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"target": "es2015",
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": [
+		"typings/index.d.ts",
+		"src/**/*"
+	]
+}

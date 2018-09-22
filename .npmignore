@@ -1,0 +1,7 @@
+.DS_Store
+/.idea
+/.gitignore
+/node_modules
+/package-lock.json
+/tsconfig.json
+/src

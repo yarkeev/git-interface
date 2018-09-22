@@ -7,266 +7,213 @@ Interface to work with a git repository in node.js
 ## Installation
 
 ```bash
-$ npm install git-interface
+$ npm install git-interface --save
 ```
 
 ## Usage
 
 ```js
-git = require('git-interface');
+const { Git } = require('git-interface');
 
-//get hash of last commit
-git.getHash('path/to/file', function (hash) {
-	console.log(hash);
+const git = new Git({
+	dir: '/path/to/repository' //default path is current directory
 });
 ...
 ```
 
 ## Documentation
 
-### .setOptions(options)
+### .setDir(dir: string)
 
-Set repository options
-
-```js
-//default path is current directory
-//but you can set the path:
-git.setOptions({
-	cwd: '/path/to/repository'
-});
-```
-
-### .clone(repo, dest, [callback])
-
-clone repository `repo` to path `dest`
+Set path to repository
 
 ```js
-git.clone('git@github.com:yarkeev/git-interface.git', 'git-interface', function () {
-	console.log('clone done');
-});
+git.setDir('/path/to/repository');
 ```
 
-### .commit(message, [callback])
+### .clone(repository: string, dest: string)
 
-Commit changes with `message`
+clone repository `repository` to path `dest`
 
 ```js
-git.commit('message for annotate', function () {
-	console.log('commit done');
-});
+await git.clone('git@github.com:yarkeev/git-interface.git', 'git-interface');
 ```
 
-### .pull([callback])
-
-Pull current branch from origin
-
-```js
-git.pull(function () {
-	console.log('pull done');
-});
-```
-
-### .push([callback])
-
-Push current branch to origin
-
-```js
-git.push(function () {
-	console.log('push done');
-});
-```
-
-### .createBranch(branchName, [callback])
-
-Create branch with name `branchName`
-
-```js
-git.createBranch('new-branch', function () {
-	console.log('new branch created');
-});
-```
-
-### .checkout(branchName, [callback])
+### .checkout(branchName: string)
 
 Checkout to branch `branchName`
 
 ```js
-git.checkout('master', function () {
-	console.log('now branch is master');
-});
+await git.checkout('master');
 ```
 
-### .getHash(fileName, callback)
+### .commit(message: string)
 
-Getting hash commit was last modified
+Commit changes with `message`
 
 ```js
-git.getHash('path/to/file', function (hash) {
-	console.log(hash);
-});
+await git.commit('message for annotate');
 ```
 
-### .diffMaster(fileName, callback)
+### .pull()
 
-File comparison `fileName` with master
+Pull current branch from origin
 
 ```js
-git.diffMaster('path/to/file', function (diff) {
-	console.log('diff with master:', diff);
-});
+await git.pull();
 ```
 
-### .getBranchName(callback)
+### .push()
 
-Get name of the current brunch
+Push current branch to origin
 
 ```js
-git.getBranchName(function (branchName) {
-	console.log('current branch: ' + branchName);
-});
+await git.push();
 ```
 
-### .add([callback])
+### .add()
 
 Add all new files to VCS
 
 ```js
-git.add(function () {
-	console.log('done');
-});
+await git.add();
 ```
 
-### .merge(branchName, [mergeOptions], [callback])
+### .merge(branchName: string, mergeOptions?: string)
 
 Merge branch `branchName` to the current branch with flags `mergeOptions`
 
 ```js
-git.merge('branch-name', function () {
-	console.log('branch-name merged');
-});
+await git.merge('branch-name');
 ```
 ```js
-git.merge('branch-name', '--squash', function () {
-	console.log('branch-name merged');
-});
+await git.merge('branch-name', '--squash');
 ```
 
-### .fetch([callback])
+### .fetch()
 
 Download objects and refs from origin
 
 ```js
-git.fetch(function () {
-	console.log('fetch done');
-});
+await git.fetch();
 ```
 
-### .getConflictList(callback)
-
-Get list of conflicted files after merge
-
-```js
-git.getConflictList(function (conflicts) {
-	console.log('conflicted files: ', conflicts);
-});
-```
-
-### .getUncommittedList(callback)
-
-Get list of uncommitted files
-
-```js
-git.getUncommittedList(function (uncommitted) {
-	console.log('uncommitted files: ', uncommitted);
-});
-```
-
-### .getLastChanges(callback)
-
-Getting a list of files that have changed in the last commit
-
-```js
-git.getLastChanges(function (changes) {
-	console.log('last changes: ', changes);
-});
-```
-
-### .getDiff(revision, callback)
-
-Getting a list of files that have changed relative revision
-
-```js
-git.getDiff('52986deb5d9c2e60ece526a785b125079b86980b', function (changes) {
-	console.log('changes: ', changes);
-});
-```
-
-### .reset([callback])
+### .reset()
 
 Reset uncommitted changes
 
 ```js
-git.reset(function () {
-	console.log('reset done');
-});
+await git.reset();
 ```
 
-### .removeLocalBranch(branchName, [callback])
+### .getHash(fileName: string)
+
+Getting hash commit was last modified
+
+```js
+const hash = await git.getHash('path/to/file');
+```
+
+### .diffMaster(fileName: string)
+
+File comparison `fileName` with master
+
+```js
+const diff = await git.diffMaster('path/to/file');
+```
+
+### .getBranchName()
+
+Get name of the current brunch
+
+```js
+const branch = await git.getBranchName();
+```
+
+### .createBranch(branchName: string)
+
+Create branch with name `branchName`
+
+```js
+await git.createBranch('new-branch');
+```
+
+### .getDiffByRevisionFileList(revision: string)
+
+Getting a list of files that have changed relative revision
+
+```js
+const diffFileList = await git.getDiffByRevisionFileList('5e19a1d3c386a2607885627f3774d3d7746b60de');
+```
+
+### .getConflictList()
+
+Get list of conflicted files after merge
+
+```js
+const conflictList = await git.getConflictList();
+```
+
+### .getUncommittedList()
+
+Get list of uncommitted files
+
+```js
+const uncomittedList = await git.getUncommittedList();
+```
+
+### .getLastChanges()
+
+Getting a list of files that have changed in the last commit
+
+```js
+const lastChanges = await git.getLastChanges();
+```
+
+### .removeLocalBranch(branchName: string)
 
 Remove local branch `branchName`
 
 ```js
-git.removeLocalBranch('branch-name', function () {
-	console.log('local branch-name removed');
-});
+await git.removeLocalBranch('branch-name');
 ```
 
-### .removeRemoteBranch(branchName, [callback])
+### .removeRemoteBranch(branchName: string)
 
 Remove branch `branchName` from origin
 
 ```js
-git.removeRemoteBranch('branch-name', function () {
-	console.log('branch-name removed from origin');
-});
+await git.removeRemoteBranch('branch-name');
 ```
 
-### .getLocalBranchList([callback])
+### .getLocalBranchList()
 
 Get list of local branches
 
 ```js
-git.getLocalBranchList(function (branches) {
-	console.log('local branches: ', branches);
-});
+const branches = await git.getLocalBranchList();
 ```
 
-### .getRemoteBranchList([callback])
+### .getRemoteBranchList()
 
 Get list of remote branches
 
 ```js
-git.getRemoteBranchList(function (branches) {
-	console.log('remote branches: ', branches);
-});
+const branches = await git.getRemoteBranchList();
 ```
 
-### .getTimeOfLastCommit(branchName, [callback])
+### .getTimeOfLastCommit(branchName: string)
 
 Get time of last commit in branch
 
 ```js
-git.getTimeOfLastCommit('master', function (time) {
-	console.log('time of last commit in master: ', time);
-});
+const timeOfLastCommit = await git.getTimeOfLastCommit('branch-name');
 ```
 
-### .getHashOfLastCommit(branchName, [callback])
+### .getHashOfLastCommit(branchName: string)
 
 Get hash of last commit in branch
 
 ```js
-git.getHashOfLastCommit('master', function (hash) {
-	console.log('hash of last commit in master: ', hash);
-});
+const hashOfLastCommit = await git.getHashOfLastCommit('branch-name');
 ```
