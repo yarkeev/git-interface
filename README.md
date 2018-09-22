@@ -1,6 +1,6 @@
 # git-interface
 
-![](http://s7.postimg.org/tz15stjaj/git_interface.png)
+![](https://raw.githubusercontent.com/yarkeev/git-interface/gh-pages/docs/pics/logo.png)
 
 Interface to work with a git repository in node.js
 
