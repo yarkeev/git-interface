@@ -1,5 +1,6 @@
 .DS_Store
 /.idea
 /dist
+/docs
 /node_modules
 /package-lock.json
