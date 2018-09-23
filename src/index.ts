@@ -35,7 +35,6 @@ export class Git extends EventEmitter{
 					reject();
 				}
 			});
-
 		});
 	}
 
