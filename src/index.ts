@@ -23,10 +23,10 @@ export class Git extends EventEmitter{
 			const child = spawn('git', cmd.split(' '), { cwd: this.dir });
 			let out = '';
 
-			child.stdout.on('data', (data) => { out+= data.toString(); this.emit('out', data.toString()); });
-			child.stdout.on('error', (data) => { out+= data.toString(); this.emit('out', data.toString()); });
-			child.stderr.on('data', (data) => { out+= data.toString(); this.emit('out', data.toString()); });
-			child.stderr.on('error', (data) => { out+= data.toString(); this.emit('out', data.toString()); });
+			child.stdout.on('data', (data) => { out += data.toString(); this.emit('out', data.toString()); });
+			child.stdout.on('error', (data) => { out += data.toString(); this.emit('out', data.toString()); });
+			child.stderr.on('data', (data) => { out += data.toString(); this.emit('out', data.toString()); });
+			child.stderr.on('error', (data) => { out += data.toString(); this.emit('out', data.toString()); });
 
 			child.on('close', (code: number, signal: string) => {
 				if (code === 0) {
