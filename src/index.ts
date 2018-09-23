@@ -39,7 +39,7 @@ export class Git extends EventEmitter{
 		});
 	}
 
-	protected getDiffFileList(diffOptions: string = '') {
+	protected getDiffFileList(diffOptions: string = ''): Promise<string[]> {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const conflicts = await this.gitExec(`diff ${diffOptions}`);
@@ -143,15 +143,15 @@ export class Git extends EventEmitter{
 		return this.gitExec(`checkout -b ${branchName}`);
 	}
 
-	public getDiffByRevisionFileList(revision: string) {
+	public getDiffByRevisionFileList(revision: string): Promise<string[]> {
 		return this.getDiffFileList(`${revision} --name-only`);
 	}
 
-	public getConflictList() {
+	public getConflictList(): Promise<string[]> {
 		return this.getDiffFileList(`--name-only --diff-filter=U`);
 	}
 
-	public getUncommittedList() {
+	public getUncommittedList(): Promise<string[]> {
 		return this.getDiffFileList(`--name-only`);
 	}
 
