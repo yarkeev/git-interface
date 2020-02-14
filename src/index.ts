@@ -62,6 +62,23 @@ export class Git extends EventEmitter{
 		return this.gitExec(`checkout ${branchName}`);
 	}
 
+	/**
+	 * Updates the git submodules.
+	 *
+	 * @param init initialize not-yet initialized submodules (--init), true by default
+	 * @param recursive whether to update the nested submodules (--recursive), true by default
+	 */
+	public updateSubmodules(init: boolean = true, recursive: boolean = true) {
+		let command = `submodule update`;
+		if (init) {
+			command += ` --init`;
+		}
+		if (recursive) {
+			command += ` --recursive`;
+		}
+		return this.gitExec(command);
+	}
+
 	public commit(message: string) {
 		return this.gitExec(`commit -am ${message}`);
 	}
