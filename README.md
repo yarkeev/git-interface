@@ -47,6 +47,14 @@ Checkout to branch `branchName`
 await git.checkout('master');
 ```
 
+### .updateSubmodules(init: boolean = true, recursive: boolean = true)
+
+Updates the git submodules:
+
+```js
+await git.updateSubmodules();
+```
+
 ### .commit(message: string)
 
 Commit changes with `message`
