@@ -54,8 +54,13 @@ export class Git extends EventEmitter{
 		this.dir = dir;
 	}
 
-	public clone(repository: string, dest: string) {
-		return this.gitExec(`clone ${repository} ${dest}`);
+	public clone(repository: string, dest: string, options?: { depth?: number}) {
+
+		const opt = options || { depth: Infinity }
+
+		const depthOption = opt.depth !== Infinity ? ` --depth=${opt.depth}` : '';
+
+		return this.gitExec(`clone ${repository} ${dest}${depthOption}`);
 	}
 
 	public checkout(branchName: string) {
