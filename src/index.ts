@@ -102,12 +102,12 @@ export class Git extends EventEmitter{
 		});
 	}
 
-	public push() {
+	public push(remote?: string) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const branch = await this.getBranchName();
 
-				await this.gitExec(`push origin ${branch}`);
+				await this.gitExec(`push ${remote || 'origin'} ${branch}`);
 
 				resolve()
 			} catch (err) {
