@@ -146,6 +146,14 @@ Create branch with name `branchName`
 await git.createBranch('new-branch');
 ```
 
+### .deleteBranch(branchName: string)
+
+Delete branch with name `branchName`
+
+```js
+await git.deleteBranch('existing-branch');
+```
+
 ### .getDiffByRevisionFileList(revision: string)
 
 Getting a list of files that have changed relative revision
