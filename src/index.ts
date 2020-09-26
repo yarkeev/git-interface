@@ -243,6 +243,26 @@ export class Git extends EventEmitter{
 		});
 	}
 
+	public getRemotes(): Promise<string[]> {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const result = await this.gitExec(`remote`);
+				const remoteNames = result
+					.split('\n')
+					.map((item: string) => item.trim());
+
+				resolve(remoteNames);
+			} catch (err) {
+				reject(err);
+			}
+		});
+	}
+
+	public async getRemoteUrl(name: string): Promise<string> {
+		const result = await this.gitExec(`remote get-url ${name}`);
+		return result.trim();
+	}
+
 	public getTimeOfLastCommit(branchName: string) {
 		return new Promise(async (resolve, reject) => {
 			try {

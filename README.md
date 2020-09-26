@@ -122,6 +122,22 @@ Set the url of a remote
 await git.setRemote('origin', 'git@github.com:yarkeev/git-interface.git');
 ```
 
+### .getRemotes()
+
+Gets list of remote names
+
+```js
+await git.getRemotes();
+```
+
+### .getRemoteUrl(name: string)
+
+Gets a url of a remote by name
+
+```js
+await git.getRemoteUrl('origin');
+```
+
 ### .reset()
 
 Reset uncommitted changes
