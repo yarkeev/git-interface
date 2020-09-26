@@ -106,6 +106,22 @@ Download objects and refs from origin
 await git.fetch();
 ```
 
+### .addRemote(name: string, url: string)
+
+Add a remote
+
+```js
+await git.addRemote('origin', 'git@github.com:yarkeev/git-interface.git');
+```
+
+### .setRemote(name: string, url: string)
+
+Set the url of a remote
+
+```js
+await git.setRemote('origin', 'git@github.com:yarkeev/git-interface.git');
+```
+
 ### .reset()
 
 Reset uncommitted changes

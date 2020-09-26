@@ -120,6 +120,14 @@ export class Git extends EventEmitter{
 		return this.gitExec(`add -A`);
 	}
 
+	public addRemote(name: string, url: string) {
+		return this.gitExec(`remote add ${name} ${url}`);
+	}
+
+	public setRemote(name: string, url: string){
+		return this.gitExec(`remote set-url ${name} ${url}`);
+	}
+
 	public merge(branchName: string, mergeOptions?: string) {
 		return this.gitExec(`merge ${branchName} ${mergeOptions}`)
 	}
