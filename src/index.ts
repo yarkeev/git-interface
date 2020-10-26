@@ -20,7 +20,9 @@ export class Git extends EventEmitter{
 
 	protected async gitExec(cmd: string): Promise<string> {
 		return new Promise<string>((resolve, reject) => {
-			const child = spawn('git', cmd.split(' '), { cwd: this.dir });
+			const splitRegex = /'[^']+'|[^\s]+/g;
+			const commandArgs = cmd.match(splitRegex).map(e => e.replace(/'(.+)'/, "'$1'"));
+			const child = spawn('git', commandArgs, { cwd: this.dir });
 			let out = '';
 
 			child.stdout.on('data', (data) => { out += data.toString(); this.emit('out', data.toString()); });
@@ -32,7 +34,7 @@ export class Git extends EventEmitter{
 				if (code === 0) {
 					resolve(out);
 				} else {
-					reject();
+					reject(new Error(out));
 				}
 			});
 		});
@@ -88,8 +90,10 @@ export class Git extends EventEmitter{
 		return this.gitExec(command);
 	}
 
-	public commit(message: string) {
-		return this.gitExec(`commit -am ${message}`);
+	public commit(message: string, all: boolean = false) {
+		const escapedMessage = message.replace(/'/g, "\\'");
+		const allOption = all ? 'a' : ''
+		return this.gitExec(`commit -${allOption}m '${escapedMessage}'`);
 	}
 
 	public pull() {
@@ -174,6 +178,10 @@ export class Git extends EventEmitter{
 
 	public createBranch(branchName: string) {
 		return this.gitExec(`checkout -b ${branchName}`);
+	}
+
+	public deleteBranch(branchName: string) {
+		return this.gitExec(`branch -D ${branchName}`);
 	}
 
 	public getDiffByRevisionFileList(revision: string): Promise<string[]> {
