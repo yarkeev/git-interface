@@ -31,6 +31,14 @@ Set path to repository
 git.setDir('/path/to/repository');
 ```
 
+### .init()
+
+Initializes new git repo
+
+```js
+git.init();
+```
+
 ### .clone(repository: string, dest: string)
 
 clone repository `repository` to path `dest`
