@@ -124,6 +124,14 @@ export class Git extends EventEmitter{
 		return this.gitExec(`add -A`);
 	}
 
+	public addRemote(name: string, url: string) {
+		return this.gitExec(`remote add ${name} ${url}`);
+	}
+
+	public setRemote(name: string, url: string){
+		return this.gitExec(`remote set-url ${name} ${url}`);
+	}
+
 	public merge(branchName: string, mergeOptions?: string) {
 		return this.gitExec(`merge ${branchName} ${mergeOptions}`)
 	}
@@ -237,6 +245,26 @@ export class Git extends EventEmitter{
 				reject(err);
 			}
 		});
+	}
+
+	public getRemotes(): Promise<string[]> {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const result = await this.gitExec(`remote`);
+				const remoteNames = result
+					.split('\n')
+					.map((item: string) => item.trim());
+
+				resolve(remoteNames);
+			} catch (err) {
+				reject(err);
+			}
+		});
+	}
+
+	public async getRemoteUrl(name: string): Promise<string> {
+		const result = await this.gitExec(`remote get-url ${name}`);
+		return result.trim();
 	}
 
 	public getTimeOfLastCommit(branchName: string) {
