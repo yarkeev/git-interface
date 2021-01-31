@@ -96,12 +96,20 @@ export class Git extends EventEmitter{
 		return this.gitExec(`commit -${allOption}m '${escapedMessage}'`);
 	}
 
-	public pull() {
+	public pull(remote = 'origin', options?: { branch?: string, rebase?: boolean }) {
 		return new Promise(async (resolve, reject) => {
+			const opts = options || {};
 			try {
-				const branch = await this.getBranchName();
+				let branch;
+				if(opts.branch){
+					branch = opts.branch
+				}else{
+					branch = await this.getBranchName();
+				}
 
-				await this.gitExec(`pull origin ${branch}`);
+				const rebaseOpt = opts.rebase ? ' -r' : '';
+
+				await this.gitExec(`pull ${remote} ${branch}${rebaseOpt}`);
 
 				resolve()
 			} catch (err) {

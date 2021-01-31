@@ -79,6 +79,12 @@ Pull current branch from origin
 await git.pull();
 ```
 
+Pull branch `feature1` from remote `test` with rebase (`-r`) option
+
+```js
+await git.pull('test', { branch: 'feature1', rebase: true });
+```
+
 ### .push()
 
 Push current branch to origin
