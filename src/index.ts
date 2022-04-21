@@ -61,12 +61,10 @@ export class Git extends EventEmitter{
 	}
 
 	public clone(repository: string, dest: string, options?: { depth?: number}) {
-
 		const opt = options || { depth: Infinity }
+		const depthOption = opt.depth !== Infinity ? `--depth=${opt.depth}` : '';
 
-		const depthOption = opt.depth !== Infinity ? ` --depth=${opt.depth}` : '';
-
-		return this.gitExec(`clone ${repository} ${dest}${depthOption}`);
+		return this.gitExec(`clone ${depthOption} -- ${repository} ${dest}`);
 	}
 
 	public checkout(branchName: string) {
